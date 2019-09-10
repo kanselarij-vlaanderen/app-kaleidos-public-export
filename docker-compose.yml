@@ -69,6 +69,8 @@ services:
     image: semtech/mu-javascript-template:1.3.5
     links:
       - database:database
+    volumes:
+      - ./data/exports/publieksontsluiting:/data/exports
     labels:
       - "logging=true"
     restart: always
