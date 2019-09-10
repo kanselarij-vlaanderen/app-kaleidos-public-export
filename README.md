@@ -1,4 +1,4 @@
-# RDFA Analyzer
+# Exports Kaleidos
 
 ## What's included?
 
@@ -44,8 +44,6 @@ This repository harvest two setups.  The base of these setups resides in the sta
       docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
 
   Wait for everything to boot to ensure clean caches.  You may choose to monitor the migrations service in a separate terminal to and wait for the overview of all migrations to appear: `docker-compose logs -f --tail=100 migrations`.
-
-  Once the migrations have ran, you can start developing your application by connecting the ember frontend application to this backend.
 
 ### Upgrading your setup
 

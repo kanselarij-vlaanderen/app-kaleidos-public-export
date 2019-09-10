@@ -20,5 +20,7 @@ services:
     restart: "no"
   resource:
     restart: "no"
-  migrations:
+  export-meetings:
+    ports:
+      - "1212:80"
     restart: "no"

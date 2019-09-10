@@ -1,0 +1,80 @@
+{
+  "prefixes": {
+    "besluit": "http://data.vlaanderen.be/ns/besluit#",
+    "mu": "http://mu.semte.ch/vocabularies/core/",
+    "besluitvorming": "http://data.vlaanderen.be/ns/besluitvorming#",
+    "ext": "http://mu.semte.ch/vocabularies/ext/",
+    "dct": "http://purl.org/dc/terms/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "dbpedia": "http://dbpedia.org/ontology/"
+  },
+  "types": [
+    {
+      "type": "besluit:Zitting",
+      "requiredProperties": [
+        "mu:uuid"
+      ],
+      "optionalProperties": [
+        "besluit:geplandeStart",
+        "besluitvorming:behandelt"
+      ],
+      "additionalFilter": "?resource mu:uuid '6d800a66-c65e-11e9-8641-0242ac150003' .\n"
+    },
+    {
+      "type": "besluitvorming:Agenda",
+      "requiredProperties": [
+        "mu:uuid"
+      ],
+      "optionalProperties": [
+        "dct:hasPart"
+      ],
+      "additionalFilter": "?resource ^besluitvorming:behandelt ?zitting .\n            ?zitting mu:uuid '6d800a66-c65e-11e9-8641-0242ac150003' .\n"
+    },
+    {
+      "type": "besluit:Agendapunt",
+      "requiredProperties": [
+        "mu:uuid"
+      ],
+      "optionalProperties": [
+        "ext:prioriteit",
+        "ext:wordtGetoondAlsMededeling"
+      ],
+      "additionalFilter": "?resource ^dct:hasPart ?agenda .\n            ?agenda ^besluitvorming:behandelt ?zitting .\n            ?zitting mu:uuid '6d800a66-c65e-11e9-8641-0242ac150003' .\n"
+    },
+    {
+      "type": "dbpedia:UnitOfWork",
+      "requiredProperties": [
+        "mu:uuid"
+      ],
+      "optionalProperties": [
+        "besluitvorming:heeftBevoegde",
+        "prov:generated",
+        "besluitvorming:isGeagendeerdVia"
+      ],
+      "additionalFilter": "?resource besluitvorming:isGeagendeerdVia ?agendapunt.\n            ?agendapunt ^dct:hasPart ?agenda .\n            ?agenda ^besluitvorming:behandelt ?zitting .\n            ?zitting mu:uuid '6d800a66-c65e-11e9-8641-0242ac150003' .\n"
+    },
+    {
+      "type": "besluitvorming:NieuwsbriefInfo",
+      "requiredProperties": [
+        "mu:uuid"
+      ],
+      "optionalProperties": [
+        "dct:title",
+        "ext:htmlInhoud",
+        "ext:afgewerkt",
+        "ext:themesOfSubcase"
+      ],
+      "additionalFilter": "?zitting mu:uuid '6d800a66-c65e-11e9-8641-0242ac150003' .\n             ?resource ext:afgewerkt \"true\"^^<http://mu.semte.ch/vocabularies/typed-literals/boolean> ; ^prov:generated ?subcase .\n             ?subcase besluitvorming:isGeagendeerdVia ?agendapunt.\n             ?agendapunt ^dct:hasPart ?agenda .\n            ?agenda ^besluitvorming:behandelt ?zitting .\n"
+    },
+    {
+      "type": "ext:ThemaCode",
+      "requiredProperties": [
+        "mu:uuid"
+      ],
+      "optionalProperties": [
+        "skos:prefLabel"
+      ],
+      "additionalFilter": ""
+    }
+  ]
+}

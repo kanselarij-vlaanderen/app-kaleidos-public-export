@@ -12,8 +12,6 @@ services:
     image: semtech/mu-identifier:1.7.0
     links:
       - dispatcher:dispatcher
-    ports:
-      - "80:80"
     labels:
       - "logging=true"
     restart: always
@@ -33,8 +31,6 @@ services:
     environment:
       SPARQL_UPDATE: "true"
       DEFAULT_GRAPH: "http://mu.semte.ch/application"
-    ports:
-      - "8890:8890"
     volumes:
       - ./data/db:/data
     labels:
@@ -51,14 +47,19 @@ services:
       - "logging=true"
     restart: always
     logging: *default-logging
-  migrations:
-    image: semtech/mu-migrations-service:0.5.0
+  export-meetings:
+    image: lblod/mandaten-download-generator-service:0.3.4
     links:
       - database:database
     environment:
-      MU_SPARQL_TIMEOUT: '300'
+      MU_SPARQL_ENDPOINT: "http://172.17.0.1:8895/sparql"
+      EXPORT_CRON_PATTERN: "0 0 5 * * *"
+      EXPORT_FILE_BASE: "meetings"
+      MU_APPLICATION_GRAPH: "http://mu.semte.ch/graphs/system/export-meetings"
+      EXPORT_TTL_BATCH_SIZE: 100
     volumes:
-      - ./config/migrations:/data/migrations
+      - ./data/exports/meetings:/data/exports
+      - ./config/export/meetings:/config
     labels:
       - "logging=true"
     restart: always
