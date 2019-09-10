@@ -24,3 +24,11 @@ services:
     ports:
       - "1212:80"
     restart: "no"
+  publieksontsluiting-export-service:
+    environment:
+      NODE_ENV: "development"
+    ports:
+      - "8888:80"
+    links:
+      - database:database
+    restart: "no"

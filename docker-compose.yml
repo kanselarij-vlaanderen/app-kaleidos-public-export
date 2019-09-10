@@ -64,3 +64,12 @@ services:
       - "logging=true"
     restart: always
     logging: *default-logging
+  publieksontsluiting-export-service:
+    #image: kanselarij-vlaanderen/publieksontsluiting-export-service
+    image: semtech/mu-javascript-template
+    links:
+      - database:database
+    labels:
+      - "logging=true"
+    restart: always
+    logging: *default-logging
