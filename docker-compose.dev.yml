@@ -27,8 +27,11 @@ services:
   publieksontsluiting-export:
     environment:
       NODE_ENV: "development"
+      KALEIDOS_SPARQL_ENDPOINT: "http://kaleidos-db:8895/sparql"
     ports:
       - "8888:80"
     links:
       - database:database
+    extra_hosts:
+      - "kaleidos:172.17.0.1"
     restart: "no"
