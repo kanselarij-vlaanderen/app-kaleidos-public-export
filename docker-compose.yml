@@ -26,7 +26,7 @@ services:
       - "logging=true"
     restart: 'no'
     logging: *default-logging
-  database:
+  virtuoso:
     image: tenforce/virtuoso:1.3.2-virtuoso7.2.2
     environment:
       SPARQL_UPDATE: "true"
@@ -40,7 +40,7 @@ services:
   resource:
     image: semtech/mu-cl-resources:1.17.1
     links:
-      - database:database
+      - virtuoso:database
     volumes:
       - ./config/resources:/config
     labels:
@@ -51,7 +51,7 @@ services:
     #image: kanselarij-vlaanderen/publieksontsluiting-export-service
     image: semtech/mu-javascript-template:1.3.5
     links:
-      - database:database
+      - virtuoso:database
     volumes:
       - ./data/exports/publieksontsluiting:/data/exports
     labels:

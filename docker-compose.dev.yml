@@ -14,7 +14,7 @@ services:
     restart: "no"
   dispatcher:
     restart: "no"
-  database:
+  virtuoso:
     ports:
       - "8890:8890"
     restart: "no"
@@ -24,11 +24,11 @@ services:
     environment:
       NODE_ENV: "development"
       KALEIDOS_SPARQL_ENDPOINT: "http://kaleidos-db:8895/sparql"
-      MU_SPARQL_ENDPOINT: "http://database:8890/sparql"
+      MU_SPARQL_ENDPOINT: "http://virtuoso:8890/sparql"
     ports:
       - "8888:80"
     links:
-      - database:database
+      - virtuoso:virtuoso
     extra_hosts:
       - "kaleidos-db:172.17.0.1"
     restart: "no"
