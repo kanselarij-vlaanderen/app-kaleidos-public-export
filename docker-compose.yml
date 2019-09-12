@@ -47,24 +47,7 @@ services:
       - "logging=true"
     restart: no
     logging: *default-logging
-  export-meetings:
-    image: lblod/mandaten-download-generator-service:0.3.4
-    links:
-      - database:database
-    environment:
-      MU_SPARQL_ENDPOINT: "http://172.17.0.1:8895/sparql"
-      EXPORT_CRON_PATTERN: "0 0 5 * * *"
-      EXPORT_FILE_BASE: "meetings"
-      MU_APPLICATION_GRAPH: "http://mu.semte.ch/graphs/system/export-meetings"
-      EXPORT_TTL_BATCH_SIZE: 100
-    volumes:
-      - ./data/exports/meetings:/data/exports
-      - ./config/export/meetings:/config
-    labels:
-      - "logging=true"
-    restart: no
-    logging: *default-logging
-  publieksontsluiting-export:
+  export:
     #image: kanselarij-vlaanderen/publieksontsluiting-export-service
     image: semtech/mu-javascript-template:1.3.5
     links:

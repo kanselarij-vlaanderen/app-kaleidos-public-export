@@ -20,11 +20,7 @@ services:
     restart: "no"
   resource:
     restart: "no"
-  export-meetings:
-    ports:
-      - "1212:80"
-    restart: "no"
-  publieksontsluiting-export:
+  export:
     environment:
       NODE_ENV: "development"
       KALEIDOS_SPARQL_ENDPOINT: "http://kaleidos-db:8895/sparql"
