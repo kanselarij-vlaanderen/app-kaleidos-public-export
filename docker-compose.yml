@@ -14,7 +14,7 @@ services:
       - dispatcher:dispatcher
     labels:
       - "logging=true"
-    restart: no
+    restart: 'no'
     logging: *default-logging
   dispatcher:
     image: semtech/mu-dispatcher:1.1.2
@@ -24,7 +24,7 @@ services:
       - ./config/dispatcher:/config
     labels:
       - "logging=true"
-    restart: no
+    restart: 'no'
     logging: *default-logging
   database:
     image: tenforce/virtuoso:1.3.2-virtuoso7.2.2
@@ -35,7 +35,7 @@ services:
       - ./data/db:/data
     labels:
       - "logging=true"
-    restart: no
+    restart: 'no'
     logging: *default-logging
   resource:
     image: semtech/mu-cl-resources:1.17.1
@@ -45,7 +45,7 @@ services:
       - ./config/resources:/config
     labels:
       - "logging=true"
-    restart: no
+    restart: 'no'
     logging: *default-logging
   export:
     #image: kanselarij-vlaanderen/publieksontsluiting-export-service
@@ -56,5 +56,5 @@ services:
       - ./data/exports/publieksontsluiting:/data/exports
     labels:
       - "logging=true"
-    restart: no
+    restart: 'no'
     logging: *default-logging
