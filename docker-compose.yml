@@ -18,8 +18,6 @@ services:
     logging: *default-logging
   dispatcher:
     image: semtech/mu-dispatcher:1.1.2
-    links:
-      - resource:resource
     volumes:
       - ./config/dispatcher:/config
     labels:
