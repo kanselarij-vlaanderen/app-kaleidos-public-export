@@ -37,16 +37,6 @@ services:
       - "logging=true"
     restart: 'no'
     logging: *default-logging
-  resource:
-    image: semtech/mu-cl-resources:1.17.1
-    links:
-      - virtuoso:database
-    volumes:
-      - ./config/resources:/config
-    labels:
-      - "logging=true"
-    restart: 'no'
-    logging: *default-logging
   export:
     #image: kanselarij-vlaanderen/publieksontsluiting-export-service
     image: semtech/mu-javascript-template:1.3.5
