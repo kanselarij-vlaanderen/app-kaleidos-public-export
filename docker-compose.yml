@@ -38,8 +38,7 @@ services:
     restart: 'no'
     logging: *default-logging
   export:
-    #image: kanselarij-vlaanderen/publieksontsluiting-export-service
-    image: semtech/mu-javascript-template:1.3.5
+    image: kanselarij/publieksontsluiting-export-service
     environment:
       MU_SPARQL_ENDPOINT: "http://virtuoso:8890/sparql" # database for intermediate results
       KALEIDOS_SPARQL_ENDPOINT: "http://database:8890/sparql" # database to export data from
