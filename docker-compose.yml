@@ -49,3 +49,16 @@ services:
       - "logging=true"
     restart: 'no'
     logging: *default-logging
+  file-packaging:
+    image: cecemel/simple-file-package-service:0.4.0
+    environment:
+      TARGET_FOLDER: "/data/files"
+      DATA_FOLDER: "/data/original-files/"
+      HOURS_DELIVERING_TIMEOUT: '3'
+      PACKAGE_CRON_PATTERN: '0 * * * * *'
+    links:
+      - virtuoso:database
+    volumes:
+      - ./config/export/file-query.js:/app/file-query.js
+      - ./data/files:/data/files
+      # - /data/app-kaleidos/data/files:/data/original-files  # update to the Kaleidos file volume
