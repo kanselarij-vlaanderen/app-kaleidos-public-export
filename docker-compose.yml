@@ -50,8 +50,9 @@ services:
   export:
     #image: kanselarij-vlaanderen/publieksontsluiting-export-service
     image: semtech/mu-javascript-template:1.3.5
-    links:
-      - virtuoso:database
+    environment:
+      MU_SPARQL_ENDPOINT: "http://virtuoso:8890/sparql" # database for intermediate results
+      KALEIDOS_SPARQL_ENDPOINT: "http://database:8890/sparql" # database to export data from
     volumes:
       - ./data/exports/publieksontsluiting:/data/exports
     labels:
