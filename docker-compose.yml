@@ -39,7 +39,7 @@ services:
     image: kanselarij/publieksontsluiting-export-service
     environment:
       MU_SPARQL_ENDPOINT: "http://virtuoso:8890/sparql" # database for intermediate results
-      KALEIDOS_SPARQL_ENDPOINT: "http://database:8890/sparql" # database to export data from
+      KALEIDOS_SPARQL_ENDPOINT: "http://triplestore:8890/sparql" # database to export data from
     volumes:
       - ./data/exports/publieksontsluiting:/data/exports
     labels:
