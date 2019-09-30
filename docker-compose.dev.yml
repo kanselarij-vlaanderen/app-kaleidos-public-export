@@ -14,9 +14,13 @@ services:
     restart: "no"
   dispatcher:
     restart: "no"
+  database:
+    restart: "no"
   virtuoso:
     ports:
       - "8890:8890"
+    restart: "no"
+  deltanotifier:
     restart: "no"
   export:
     environment:
