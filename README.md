@@ -42,7 +42,16 @@ services:
       - /data/app-kaleidos/data/files:/data/original-files
 ```
 
-## Creating an export
+## Preparing an export for Valvas
+
+An export exists of TTL files and ZIP packages containing the files.
+
+For each session, 3 TTL files and 1 ZIP package are generated. The TTL files contain:
+1. nieuwsbrief info resources for KB
+2. mededelingen
+3. documents and related files
+
+### Creating a new export
 
 The services to create an export are configured in `docker-compose.batch.yml`. Make sure both services, `batch-ttl` and `batch-file` have access to the `default` and the external `kaleidos` network.
 
@@ -71,4 +80,23 @@ If an export is done, stop the stack and reset Virtuoso for the next export.
 ```
 docker-compose -f docker-compose.yml -f docker-compose.batch.yml -f docker-compose.override.yml down
 ./reset-virtuoso.sh
+```
+
+### Monitor the progress of an export
+
+To monitor the progress of the TTL export, execute the following SPARQL query:
+
+```
+SELECT COUNT(?s) ?status WHERE {
+  GRAPH <http://mu.semte.ch/graph/public-export-jobs> {
+     ?s a <http://mu.semte.ch/vocabularies/ext/PublicExportJob> ; <http://mu.semte.ch/vocabularies/ext/status> ?status .
+  }
+} GROUP BY ?status
+```
+
+To monitor the progress of the file export, execute the following SPARQL query:
+```
+SELECT ?status COUNT(?s) WHERE {
+  ?s a <http://mu.semte.ch/vocabularies/ext/simple-file-package-service/SimpleFilePackageJob> ; <http://mu.semte.ch/vocabularies/ext/simple-file-package-service/status> ?status
+} GROUP BY ?status
 ```
