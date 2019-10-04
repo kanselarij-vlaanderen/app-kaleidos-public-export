@@ -50,7 +50,7 @@ class Batch
               <http://mu.semte.ch/vocabularies/ext/status> \"done\" ;
               <http://mu.semte.ch/vocabularies/ext/graph> ?docGraph .
        }
-     } LIMIT 5
+     }
      ")
     result.map(&:docGraph)
   end
