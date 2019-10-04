@@ -52,7 +52,7 @@ services:
       TARGET_FOLDER: "/data/files"
       DATA_FOLDER: "/data/original-files/"
       HOURS_DELIVERING_TIMEOUT: '3'
-      PACKAGE_CRON_PATTERN: '0 * * * * *'
+      PACKAGE_CRON_PATTERN: '0 0 0 0 1 *'
     links:
       - virtuoso:database
     volumes:

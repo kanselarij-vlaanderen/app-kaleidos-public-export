@@ -44,4 +44,31 @@ services:
 
 ## Creating an export
 
-TODO
+The services to create an export are configured in `docker-compose.batch.yml`. Make sure both services, `batch-ttl` and `batch-file` have access to the `default` and the external `kaleidos` network.
+
+First, start Virtuoso.
+```
+docker-compose up -d virtuoso
+```
+
+If Virtuoso started successfully, start the remaining services of the default stack.
+```
+docker-compose up -d
+```
+
+Next, trigger the export of the TTL files for one or more sessions. The SPARQL query to select the sessions to be exported is defined in `./src/batch/batch.rb`.
+
+```
+docker-compose -f docker-compose.yml -f docker-compose.batch.yml -f docker-compose.override.yml up -d batch-ttl
+```
+
+Once the TTL export jobs are finished, start the file export for all jobs.
+```
+docker-compose -f docker-compose.yml -f docker-compose.batch.yml -f docker-compose.override.yml up -d batch-file
+```
+
+If an export is done, stop the stack and reset Virtuoso for the next export.
+```
+docker-compose -f docker-compose.yml -f docker-compose.batch.yml -f docker-compose.override.yml down
+./reset-virtuoso.sh
+```
