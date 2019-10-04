@@ -1,6 +1,6 @@
-# Kaleidos export for Publieksontsluiting
+# Kaleidos export for Valvas
 
-Export stack based on [mu.semte.ch](https://mu.semte.ch) to generate an export to be ingested in the Publieksontsluiting application. An export consists of a Turtle file and a ZIP package with downloadable documents. Exports are created per session.
+Export stack based on [mu.semte.ch](https://mu.semte.ch) to generate an export to be ingested in the Valvas application. An export consists of Turtle files and a ZIP package with downloadable documents. Exports are created per session.
 
 ## Configuration
 
