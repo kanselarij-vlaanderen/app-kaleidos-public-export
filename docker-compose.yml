@@ -24,6 +24,16 @@ services:
       - "logging=true"
     restart: 'no'
     logging: *default-logging
+  database:
+    image: semtech/mu-authorization:0.6.0-beta.2
+    environment:
+      MU_SPARQL_ENDPOINT: "http://virtuoso:8890/sparql"
+    volumes:
+      - ./config/authorization:/config
+    labels:
+      - "logging=true"
+    restart: always
+    logging: *default-logging
   virtuoso:
     image: tenforce/virtuoso:1.3.2-virtuoso7.2.2
     environment:
@@ -59,3 +69,11 @@ services:
       - ./config/export/file-query.js:/app/file-query.js
       - ./data/files:/data/files
       # - /data/app-kaleidos/data/files:/data/original-files  # update to the Kaleidos file volume
+  deltanotifier:
+    image: semtech/mu-delta-notifier:0.1.0
+    volumes:
+      - ./config/delta:/config
+    restart: always
+    environment:
+      DEBUG_DELTA_MATCH: "true"
+      LOG_REQUESTS: "true"
