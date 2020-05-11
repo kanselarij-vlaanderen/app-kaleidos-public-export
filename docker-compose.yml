@@ -77,3 +77,15 @@ services:
     environment:
       DEBUG_DELTA_MATCH: "true"
       LOG_REQUESTS: "true"
+  ttl-to-delta:
+    image: lblod/ttl-to-delta-service:0.0.0
+    links:
+      - database:database
+    volumes:
+      - ./data/exports/valvas:/share/
+      - '/Users/oscar.rodriguez/dev/redpencil/ttl-to-delta-service/:/app/' 
+    restart: always
+    logging: *default-logging
+    environment:
+      NODE_ENV: "development"
+      

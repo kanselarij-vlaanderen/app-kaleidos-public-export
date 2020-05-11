@@ -20,12 +20,27 @@ defmodule Acl.UserGroups.Config do
       # // PUBLIC
       %GroupSpec{
         name: "public",
-        useage: [:read, :write],
+        useage: [:read, :write, :read_for_write],
         access: %AlwaysAccessible{}, # TODO: Should be only for logged in users
         graphs: [ %GraphSpec{
-                  graph: "http://mu.semte.ch/graphs/public"
-        }]
-      }
+                    graph: "http://mu.semte.ch/graphs/public",
+                    constraint: %ResourceConstraint{
+                      resource_types: [
+                        
+                      ]
+                    } },
+                  %GraphSpec{
+                    graph: "http://mu.semte.ch/graph/public-export-jobs",
+                    constraint: %ResourceConstraint{
+                      resource_types: [
+                        "http://mu.semte.ch/vocabularies/ext/PublicExportJob"
+                      ]
+                    } },
+                  %GraphSpec{
+                    graph: "http://mu.semte.ch/graphs/sessions",
+                    constraint: %ResourceFormatConstraint{
+                      resource_prefix: "http://mu.semte.ch/sessions/"
+                    } } ] },
     ]
   end
 end

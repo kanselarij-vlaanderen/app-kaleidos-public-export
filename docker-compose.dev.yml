@@ -22,11 +22,14 @@ services:
     environment:
       NODE_ENV: "development"
       KALEIDOS_SPARQL_ENDPOINT: "http://kaleidos-db:8895/sparql"
-      MU_SPARQL_ENDPOINT: "http://virtuoso:8890/sparql"
+      VIRTUOSO_SPARQL_ENDPOINT: "http://virtuoso:8890/sparql"
+      MU_SPARQL_ENDPOINT: "http://database:8890/sparql"
     ports:
       - "8888:80"
     links:
-      - virtuoso:virtuoso
+      - database:database
+    volumes: 
+      - '/Users/oscar.rodriguez/dev/redpencil/valvas-export-service/:/app/'
     extra_hosts:
       - "kaleidos-db:172.17.0.1"
     restart: "no"
