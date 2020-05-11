@@ -36,7 +36,7 @@ services:
     restart: 'no'
     logging: *default-logging
   export:
-    image: kanselarij/valvas-export-service:0.3.2
+    image: kanselarij/valvas-export-service:0.4.0
     environment:
       MU_SPARQL_ENDPOINT: "http://virtuoso:8890/sparql" # database for intermediate results
       KALEIDOS_SPARQL_ENDPOINT: "http://triplestore:8890/sparql" # database to export data from
