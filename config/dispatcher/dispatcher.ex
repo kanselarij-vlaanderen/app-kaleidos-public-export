@@ -22,8 +22,21 @@ defmodule Dispatcher do
   #   Proxy.forward conn, path, "http://resource/themes/"
   # end
 
+  match "/export/*path" do
+    Proxy.forward conn, path, "http://export/export/"
+  end
+
+  match "/deltas/*path" do
+    Proxy.forward conn, path, "http://delta-producer/files/"
+  end
+
+   match "/files/*path" do
+    Proxy.forward conn, path, "http://file/files/"
+  end
+
   match _ do
     send_resp( conn, 404, "Route not found.  See config/dispatcher.ex" )
   end
+
 
 end
