@@ -106,3 +106,10 @@ services:
     ports:
       - "12345:80"
       
+  admin-frontend:
+    image: kanselarij/frontend-valvas-admin:1.0.0
+    links:
+      - identifier:backend
+    ports:
+      - "8003:80"
+
