@@ -85,7 +85,7 @@ services:
       DEBUG_DELTA_MATCH: "true"
       LOG_REQUESTS: "true"
   ttl-to-delta:
-    image: lblod/ttl-to-delta-service:0.0.0
+    image: lblod/ttl-to-delta-service:1.0.0
     links:
       - database:database
     volumes:
@@ -96,7 +96,7 @@ services:
     environment:
       NODE_ENV: "development"
   delta-producer:
-    image: kanselarij/valvas-publication-producer:0.0.0
+    image: kanselarij/valvas-publication-producer:1.0.0
     links:
       - database:database
     volumes:
