@@ -51,7 +51,6 @@ services:
       - database:database
     volumes:
       - ./data/exports/valvas:/share
-      - '/Users/oscar.rodriguez/dev/redpencil/file-service/:/app/' 
   export:
     image: kanselarij/valvas-export-service:0.3.2
     environment:
@@ -90,26 +89,15 @@ services:
       - database:database
     volumes:
       - ./data/exports/valvas:/share/
-      - '/Users/oscar.rodriguez/dev/redpencil/ttl-to-delta-service/:/app/' 
     restart: always
     logging: *default-logging
-    environment:
-      NODE_ENV: "development"
   delta-producer:
     image: kanselarij/valvas-publication-producer:1.0.0
     links:
       - database:database
-    volumes:
-      - '/Users/oscar.rodriguez/dev/redpencil/valvas-publication-producer/:/app/' 
     restart: always
     logging: *default-logging
-    ports:
-      - "12345:80"
-      
   admin-frontend:
     image: kanselarij/frontend-valvas-admin:1.0.0
     links:
       - identifier:backend
-    ports:
-      - "8003:80"
-
