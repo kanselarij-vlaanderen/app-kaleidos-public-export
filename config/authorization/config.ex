@@ -26,20 +26,9 @@ defmodule Acl.UserGroups.Config do
                     graph: "http://mu.semte.ch/graphs/public",
                     constraint: %ResourceConstraint{
                       resource_types: [
-                        
+                        "http://mu.semte.ch/vocabularies/ext/PublicExportJob",
+                        "http://mu.semte.ch/vocabularies/ext/TtlToDeltaTask"
                       ]
-                    } },
-                  %GraphSpec{
-                    graph: "http://mu.semte.ch/graph/public-export-jobs",
-                    constraint: %ResourceConstraint{
-                      resource_types: [
-                        "http://mu.semte.ch/vocabularies/ext/PublicExportJob"
-                      ]
-                    } },
-                  %GraphSpec{
-                    graph: "http://mu.semte.ch/graphs/sessions",
-                    constraint: %ResourceFormatConstraint{
-                      resource_prefix: "http://mu.semte.ch/sessions/"
                     } } ] },
     ]
   end
