@@ -73,7 +73,8 @@ services:
   export:
     image: kanselarij/valvas-export-service:0.3.2
     environment:
-      MU_SPARQL_ENDPOINT: "http://virtuoso:8890/sparql" # database for intermediate results
+      MU_SPARQL_ENDPOINT: "http://database:8890/sparql" # database for results for which delta's must be generated
+      VIRTUOSO_SPARQL_ENDPOINT: "http://virtuoso:8890/sparql" # database for intermediate results
       KALEIDOS_SPARQL_ENDPOINT: "http://triplestore:8890/sparql" # database to export data from
     volumes:
       - ./data/exports/valvas:/data/exports
