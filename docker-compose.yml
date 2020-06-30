@@ -36,19 +36,18 @@ services:
       - ./config/authorization:/config
     labels:
       - "logging=true"
-    restart: always
+    restart: 'no'
     logging: *default-logging
   delta-notifier:
     image: semtech/mu-delta-notifier:0.1.0
     volumes:
       - ./config/delta:/config
-    restart: always
+    restart: 'no'
     environment:
       DEBUG_DELTA_MATCH: "true"
       LOG_REQUESTS: "true"
     labels:
       - "logging=true"
-    restart: 'no'
     logging: *default-logging
   virtuoso:
     image: tenforce/virtuoso:1.3.2-virtuoso7.2.2
