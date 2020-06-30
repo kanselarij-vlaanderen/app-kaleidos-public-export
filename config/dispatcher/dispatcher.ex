@@ -26,8 +26,8 @@ defmodule Dispatcher do
     Proxy.forward conn, path, "http://export/export/"
   end
 
-  match "/deltas/*path" do
-    Proxy.forward conn, path, "http://delta-producer/files/"
+  match "/publications/*path" do
+    Proxy.forward conn, path, "http://publication-producer/files/"
   end
 
    match "/files/*path" do

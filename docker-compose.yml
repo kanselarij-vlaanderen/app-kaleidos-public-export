@@ -109,7 +109,7 @@ services:
       - "logging=true"
     restart: 'no'
     logging: *default-logging
-  delta-producer:
+  publication-producer:
     image: kanselarij/valvas-publication-producer:1.0.0
     links:
       - database:database
