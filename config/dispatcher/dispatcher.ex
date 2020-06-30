@@ -26,11 +26,11 @@ defmodule Dispatcher do
     Proxy.forward conn, path, "http://export/export/"
   end
 
-  match "/publications/*path" do
+  get "/publications/*path" do
     Proxy.forward conn, path, "http://publication-producer/files/"
   end
 
-   match "/files/*path" do
+  get "/files/*path" do
     Proxy.forward conn, path, "http://file/files/"
   end
 
