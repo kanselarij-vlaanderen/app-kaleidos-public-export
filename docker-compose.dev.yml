@@ -9,27 +9,31 @@ x-logging:
 
 services:
   identifier:
+    restart: "no"
     ports:
       - "80:80"
-    restart: "no"
   dispatcher:
+    restart: "no"
+  database:
     restart: "no"
   virtuoso:
     ports:
       - "8890:8890"
     restart: "no"
+  delta-notifier:
+    restart: 'no'
+  file:
+    restart: "no"
   export:
     environment:
-      NODE_ENV: "development"
       KALEIDOS_SPARQL_ENDPOINT: "http://kaleidos-db:8895/sparql"
-      VIRTUOSO_SPARQL_ENDPOINT: "http://virtuoso:8890/sparql"
-      MU_SPARQL_ENDPOINT: "http://database:8890/sparql"
-    ports:
-      - "8888:80"
-    links:
-      - database:database
-    volumes: 
-      - '/Users/oscar.rodriguez/dev/redpencil/valvas-export-service/:/app/'
     extra_hosts:
       - "kaleidos-db:172.17.0.1"
     restart: "no"
+  file-packaging:
+    restart: "no"
+  ttl-to-delta:
+    restart: "no"
+  publication-producer:
+    restart: "no"
+
