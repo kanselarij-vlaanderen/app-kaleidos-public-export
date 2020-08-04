@@ -9,7 +9,7 @@ x-logging:
 
 services:
   admin-frontend:
-    image: kanselarij/frontend-valvas-admin:1.0.0
+    image: kanselarij/frontend-valvas-admin:0.1.0
     links:
       - identifier:backend
   identifier:
@@ -68,8 +68,19 @@ services:
       - "logging=true"
     restart: 'no'
     logging: *default-logging
+  kaleidos-public-file:
+    image: kanselarij/public-file-service
+    environment:
+      MU_SPARQL_ENDPOINT: "http://triplestore:8890/sparql" # Kaleidos DB
+      MU_APPLICATION_GRAPH: "http://mu.semte.ch/graphs/organizations/kanselarij"
+    volumes:
+      - ./data/files:/share # mount Kaleidos file folder
+    labels:
+      - "logging=true"
+    restart: 'no'
+    logging: *default-logging
   export:
-    image: kanselarij/valvas-export-service:0.3.2
+    image: kanselarij/valvas-export-service:0.5.0
     environment:
       MU_SPARQL_ENDPOINT: "http://database:8890/sparql" # database for results for which delta's must be generated
       VIRTUOSO_SPARQL_ENDPOINT: "http://virtuoso:8890/sparql" # database for intermediate results
@@ -80,29 +91,12 @@ services:
       - "logging=true"
     restart: 'no'
     logging: *default-logging
-  file-packaging:
-    image: cecemel/simple-file-package-service:0.4.0
-    environment:
-      TARGET_FOLDER: "/data/files"
-      DATA_FOLDER: "/data/original-files/"
-      HOURS_DELIVERING_TIMEOUT: '3'
-      PACKAGE_CRON_PATTERN: '0 0 0 0 1 *'
-    links:
-      - virtuoso:database
-    volumes:
-      - ./config/export/file-query.js:/app/file-query.js
-      - ./data/files:/data/files
-      # - /data/app-kaleidos/data/files:/data/original-files  # update to the Kaleidos file volume
-    labels:
-      - "logging=true"
-    restart: 'no'
-    logging: *default-logging
   ttl-to-delta:
-    image: lblod/ttl-to-delta-service:1.0.0
+    image: redpencil/ttl-to-delta:1.0.0
     links:
       - database:database
     volumes:
-      - ./data/exports/valvas:/share/
+      - ./data/exports/valvas:/share
     labels:
       - "logging=true"
     restart: 'no'
