@@ -24,13 +24,17 @@ services:
     restart: 'no'
   file:
     restart: "no"
+  kaleidos-public-file:
+    restart: "no"
+    environment:
+      MU_SPARQL_ENDPOINT: "http://kaleidos-db:8895/sparql"
+    extra_hosts:
+      - "kaleidos-db:172.17.0.1"
   export:
     environment:
       KALEIDOS_SPARQL_ENDPOINT: "http://kaleidos-db:8895/sparql"
     extra_hosts:
       - "kaleidos-db:172.17.0.1"
-    restart: "no"
-  file-packaging:
     restart: "no"
   ttl-to-delta:
     restart: "no"
