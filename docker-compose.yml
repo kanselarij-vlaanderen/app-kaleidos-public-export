@@ -102,7 +102,7 @@ services:
     restart: 'no'
     logging: *default-logging
   publication-producer:
-    image: kanselarij/valvas-publication-producer:1.0.0
+    image: kanselarij/themis-publication-producer:1.1.0
     links:
       - database:database
     labels:
