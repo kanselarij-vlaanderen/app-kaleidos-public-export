@@ -63,7 +63,7 @@ services:
   file:
     image: semtech/mu-file-service:3.1.2
     volumes:
-      - ./data/exports/valvas:/share
+      - ./data/exports:/share
     labels:
       - "logging=true"
     restart: 'no'
@@ -80,13 +80,13 @@ services:
     restart: 'no'
     logging: *default-logging
   export:
-    image: kanselarij/valvas-export-service:0.6.0
+    image: kanselarij/themis-export-service:1.0.0
     environment:
       MU_SPARQL_ENDPOINT: "http://database:8890/sparql" # database for results for which delta's must be generated
       VIRTUOSO_SPARQL_ENDPOINT: "http://virtuoso:8890/sparql" # database for intermediate results
       KALEIDOS_SPARQL_ENDPOINT: "http://triplestore:8890/sparql" # database to export data from
     volumes:
-      - ./data/exports/valvas:/data/exports
+      - ./data/exports:/share
     labels:
       - "logging=true"
     restart: 'no'
@@ -96,7 +96,7 @@ services:
     links:
       - database:database
     volumes:
-      - ./data/exports/valvas:/share
+      - ./data/exports:/share
     labels:
       - "logging=true"
     restart: 'no'
