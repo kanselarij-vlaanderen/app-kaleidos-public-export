@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  batch-export:
+    image: ruby:2.5
+    environment:
+      MU_SPARQL_ENDPOINT: "http://virtuoso:8890/sparql" # database for intermediate results
+      KALEIDOS_SPARQL_ENDPOINT: "http://triplestore:8890/sparql" # database to export data from
+    working_dir: /app
+    volumes:
+      - ./scripts:/app
+    command: "./run.sh"
+    restart: 'no'
+
