@@ -1,6 +1,10 @@
 require 'sparql/client'
 require 'json'
 
+fd = IO.sysopen("/proc/1/fd/1", "w")
+log = IO.new(fd,"w")
+log.sync = true # send log message immediately, don't wait
+
 class Batch
   KALEIDOS_GRAPH = "http://mu.semte.ch/graphs/organizations/kanselarij"
 
@@ -49,14 +53,14 @@ end
 
 batch = Batch.new
 while ! batch.up do
-  puts "Waiting for databases"
+  log.puts "Waiting for databases"
   sleep 5
 end
 
-meeting_ids = batch.fetch_meeting_ids("2020-10-01T00:00:00.000Z")
-puts "Total meetings found: #{meeting_ids.length}"
+meeting_ids = batch.fetch_meeting_ids("2019-10-01T00:00:00.000Z")
+log.puts "Total meetings found: #{meeting_ids.length}"
 export_jobs = {}
-meeting_ids.each do |uuid|
+for uuid in meeting_ids do
   uri = URI("http://export/meetings/#{uuid}/publication-activities")
   req = Net::HTTP::Post.new(uri.request_uri)
   req["Accept"] = 'application/vnd.api+json'
@@ -71,9 +75,9 @@ meeting_ids.each do |uuid|
   }'
   res = batch.request(uri, req)
   if ! res.kind_of?(Net::HTTPAccepted)
-    puts "Failure for meeting #{uuid}: #{res.inspect}"
+    log.puts "Failure for meeting #{uuid}: #{res.inspect}"
   else
-    puts "Export for meeting #{uuid} scheduled"
+    log.puts "Export for meeting #{uuid} scheduled"
   end
+  sleep 1
 end
-
