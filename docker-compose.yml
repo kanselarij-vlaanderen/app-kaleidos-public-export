@@ -13,7 +13,7 @@ services:
     links:
       - identifier:backend
   identifier:
-    image: semtech/mu-identifier:1.9.0
+    image: semtech/mu-identifier:1.9.1
     links:
       - dispatcher:dispatcher
     labels:
