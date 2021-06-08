@@ -9,7 +9,7 @@ x-logging:
 
 services:
   admin-frontend:
-    image: kanselarij/frontend-valvas-admin:themis
+    image: kanselarij/frontend-valvas-admin:0.2.0
     links:
       - identifier:backend
   identifier:
