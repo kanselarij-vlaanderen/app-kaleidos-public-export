@@ -80,7 +80,7 @@ services:
     restart: 'no'
     logging: *default-logging
   export:
-    image: kanselarij/valvas-export-service:0.8.3
+    image: kanselarij/valvas-export-service:0.8.4
     environment:
       MU_SPARQL_ENDPOINT: "http://database:8890/sparql" # database for results for which delta's must be generated
       VIRTUOSO_SPARQL_ENDPOINT: "http://virtuoso:8890/sparql" # database for intermediate results
