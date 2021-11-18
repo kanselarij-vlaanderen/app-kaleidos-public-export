@@ -22,8 +22,12 @@ defmodule Dispatcher do
   #   Proxy.forward conn, path, "http://resource/themes/"
   # end
 
-  match "/export/*path" do
-    Proxy.forward conn, path, "http://export/export/"
+  post "/meetings/*path" do
+    Proxy.forward conn, path, "http://export/meetings/"
+  end
+
+  get "/public-export-jobs/*path" do
+    Proxy.forward conn, path, "http://export/public-export-jobs/"
   end
 
   get "/publications/*path" do
