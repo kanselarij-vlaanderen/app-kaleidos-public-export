@@ -1,4 +1,4 @@
-version: '3.4'
+version: "3.4"
 
 x-logging:
   &default-logging
@@ -8,6 +8,8 @@ x-logging:
     max-file: "3"
 
 services:
+  admin-frontend:
+    restart: "no"
   identifier:
     restart: "no"
     ports:
@@ -16,12 +18,12 @@ services:
     restart: "no"
   database:
     restart: "no"
+  delta-notifier:
+    restart: "no"
   virtuoso:
     ports:
       - "8890:8890"
     restart: "no"
-  delta-notifier:
-    restart: 'no'
   file:
     restart: "no"
   kaleidos-public-file:
@@ -40,4 +42,3 @@ services:
     restart: "no"
   publication-producer:
     restart: "no"
-

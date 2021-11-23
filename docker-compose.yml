@@ -12,13 +12,15 @@ services:
     image: kanselarij/frontend-valvas-admin:0.2.0
     links:
       - identifier:backend
-  identifier:
-    image: semtech/mu-identifier:1.9.1
-    links:
-      - dispatcher:dispatcher
     labels:
       - "logging=true"
-    restart: 'no'
+    restart: always
+    logging: *default-logging
+  identifier:
+    image: semtech/mu-identifier:1.9.1
+    labels:
+      - "logging=true"
+    restart: always
     logging: *default-logging
   dispatcher:
     image: semtech/mu-dispatcher:1.1.2
@@ -26,7 +28,7 @@ services:
       - ./config/dispatcher:/config
     labels:
       - "logging=true"
-    restart: 'no'
+    restart: always
     logging: *default-logging
   database:
     image: semtech/mu-authorization:0.6.0-beta.7
@@ -36,16 +38,13 @@ services:
       - ./config/authorization:/config
     labels:
       - "logging=true"
-    restart: 'no'
+    restart: always
     logging: *default-logging
   delta-notifier:
     image: semtech/mu-delta-notifier:0.1.0
     volumes:
       - ./config/delta:/config
-    restart: 'no'
-    environment:
-      DEBUG_DELTA_MATCH: "true"
-      LOG_REQUESTS: "true"
+    restart: always
     labels:
       - "logging=true"
     logging: *default-logging
@@ -58,7 +57,7 @@ services:
       - ./data/db:/data
     labels:
       - "logging=true"
-    restart: 'no'
+    restart: always
     logging: *default-logging
   file:
     image: semtech/mu-file-service:3.1.2
@@ -66,7 +65,7 @@ services:
       - ./data/exports:/share
     labels:
       - "logging=true"
-    restart: 'no'
+    restart: always
     logging: *default-logging
   kaleidos-public-file:
     image: kanselarij/public-file-service:4.0.0
@@ -77,7 +76,7 @@ services:
       - ./data/files:/share # mount Kaleidos file folder
     labels:
       - "logging=true"
-    restart: 'no'
+    restart: always
     logging: *default-logging
   export:
     image: kanselarij/themis-export-service:1.4.0
@@ -89,23 +88,19 @@ services:
       - ./data/exports:/share
     labels:
       - "logging=true"
-    restart: 'no'
+    restart: always
     logging: *default-logging
   ttl-to-delta:
     image: redpencil/ttl-to-delta:1.0.1
-    links:
-      - database:database
     volumes:
       - ./data/exports:/share
     labels:
       - "logging=true"
-    restart: 'no'
+    restart: always
     logging: *default-logging
   publication-producer:
     image: kanselarij/themis-publication-producer:1.1.0
-    links:
-      - database:database
     labels:
       - "logging=true"
-    restart: 'no'
+    restart: always
     logging: *default-logging
