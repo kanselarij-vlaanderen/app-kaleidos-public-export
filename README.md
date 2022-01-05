@@ -1,6 +1,6 @@
-# Kaleidos export for Valvas
+# Kaleidos export for Themis
 
-Export stack based on [mu.semte.ch](https://mu.semte.ch) to produce an export to be ingested in the Valvas application. Exports are created per session and published as delta files for interested consumers.
+Export stack based on [mu.semte.ch](https://mu.semte.ch) to produce an export to be ingested in the [Themis application](https://themis.vlaanderen.be). Exports are created per meeting and published as delta files for interested consumers.
 
 ## How-to guides
 ### How to integrate the export stack with Kaleidos
@@ -49,7 +49,7 @@ services:
 ```
 
 #### Providing an alias for the database service
-Services joining multiple networks may encounter service name collisions if services have the same name in both stacks. In case app-valvas-export and the Kaleidos stack both contain a service named `database`, provide the following alias for the `database` service in `docker-compose.override.yml` of the app-valvas-export stack to resolve the collision. As a consequence, the `MU_SPARQL_ENDPOINT` environment variable of the export service also needs to be updated to take the alias into account.
+Services joining multiple networks may encounter service name collisions if services have the same name in both stacks. In case app-themis-export and the Kaleidos stack both contain a service named `database`, provide the following alias for the `database` service in `docker-compose.override.yml` of the app-themis-export stack to resolve the collision. As a consequence, the `MU_SPARQL_ENDPOINT` environment variable of the export service also needs to be updated to take the alias into account.
 
 ```
 services:
@@ -57,25 +57,26 @@ services:
     networks:
       default:
         aliases:
-          - valvas-export-database
+          - themis-export-database
   export:
     environment:
-      MU_SPARQL_ENDPOINT: "http://valvas-export-database:8890/sparql"
+      MU_SPARQL_ENDPOINT: "http://themis-export-database:8890/sparql"
 
 ```
 
 ### How to trigger an export
-The stack contains an admin frontend via which an export for a session can be triggered. It's up to the user to decide which facets of the session should be exported (e.g. only news items and announcements or documents as well). A notification about the publication of the documents can be configured via this GUI as well.
+The stack contains an admin frontend via which an export for a meeting can be triggered. It's up to the user to decide which facets of the meeting should be exported (e.g. only news items or documents as well).
 
-### How to monitor the progress of an export
-To monitor the progress of the TTL export, execute the following SPARQL query:
+Export files will be stored in `./data/exports`.
 
-```
-SELECT COUNT(?s) ?status WHERE {
-  GRAPH <http://mu.semte.ch/graph/public-export-jobs> {
-     ?s a <http://mu.semte.ch/vocabularies/ext/PublicExportJob> ; <http://mu.semte.ch/vocabularies/ext/status> ?status .
-  }
-} GROUP BY ?status
-```
+## Reference
+### High-level flow of the data sync to Themis
+The sync to Themis works with a pull-mechanism. This stack generates and provides publications, which are polled and fetched at regular intervals by the Themis stack.
 
-The resulting files, TTL as well as delta files, will be written to `./data/exports/valvas`.
+This stack contains as main components:
+- an [export service](https://github.com/kanselarij-vlaanderen/themis-export-service) responsible for collecting data from Kaleidos and generating a TTL data dump
+- a [TTL to delta conversion service](https://github.com/redpencilio/ttl-to-delta-service) to convert the TTL data dump to the delta format
+- a [producer service](https://github.com/kanselarij-vlaanderen/themis-publication-producer) providing an endpoint to fetch publications for interested consumers
+- a [public file service](https://github.com/kanselarij-vlaanderen/public-file-service) providing an endpoint for interested consumers to fetch public Kaleidos documents
+
+The main component of the [Themis stack](https://github.com/kanselarij-vlaanderen/app-themis) is the [Themis publication consumer service](https://github.com/kanselarij-vlaanderen/themis-publication-consumer) responsible for polling and fetching of the publications and accompanying documents.
