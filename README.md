@@ -14,7 +14,7 @@ Hence, the export stack and the Kaleidos application stack are required to run o
 
 Add the Kaleidos network as an external network on the server in `docker-compose.override.yml`:
 
-```
+```yml
 networks:
   kaleidos:
     external:
@@ -23,13 +23,13 @@ networks:
 
 Next, make the `export` and `kaleidos-public-file` service join the `default` network as well as the external `kaleidos` network:
 
-```
+```yml
 services:
   export:
     networks:
       - kaleidos
       - default
-  kaleidos-public-file
+  kaleidos-public-file:
     networks:
       - kaleidos
       - default
@@ -41,9 +41,9 @@ Finally, configure the `KALEIDOS_SPARQL_ENDPOINT` environment variable of the ex
 
 Bind mount the Kaleidos file volume as a volume in the `kaleidos-public-file` service on the server in `docker-compose.override.yml`:
 
-```
+```yml
 services:
-  kaleidos-public-file
+  kaleidos-public-file:
     volumes:
       - /data/app-kaleidos/data/files:/shared
 ```
