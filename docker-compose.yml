@@ -79,7 +79,7 @@ services:
     restart: always
     logging: *default-logging
   export:
-    image: kanselarij/themis-export-service:1.7.0
+    image: kanselarij/themis-export-service:1.8.0
     environment:
       MU_SPARQL_ENDPOINT: "http://database:8890/sparql" # database for results for which delta's must be generated
       VIRTUOSO_SPARQL_ENDPOINT: "http://virtuoso:8890/sparql" # database for intermediate results
