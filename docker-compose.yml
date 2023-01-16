@@ -68,7 +68,7 @@ services:
     restart: always
     logging: *default-logging
   kaleidos-public-file:
-    image: kanselarij/public-file-service:4.2.0
+    image: kanselarij/public-file-service:4.2.1
     environment:
       MU_SPARQL_ENDPOINT: "http://triplestore:8890/sparql" # Kaleidos DB
       MU_APPLICATION_GRAPH: "http://mu.semte.ch/graphs/organizations/kanselarij"
